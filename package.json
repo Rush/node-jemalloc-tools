@@ -1,0 +1,28 @@
+{
+  "name": "jemalloc-tools",
+  "version": "1.0.0",
+  "description": "Node module for controlling jemalloc - extremely useful for native memory leak tracking",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild",
+    "build": "tsc",
+    "pre-publish": "npm un build"
+  },
+  "authors": [
+    "Alexander Vassilev (author of malloc-tools)",
+    "Damian Kaczmarek"
+  ],
+  "license": "BSD",
+  "gypfile": true,
+  "dependencies": {
+    "node-addon-api": "^7.0.0",
+    "node-gyp": "^10.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3"
+  },
+  "files": ["index.js", "index.d.ts", "binding.gyp", "main.cpp"]
+}
