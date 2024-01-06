@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHeapUsage = exports.flushThreadCache = exports.arenas = exports.stats = exports.decay = exports.prof = exports.tuning = exports.version = exports.ctl = void 0;
+exports.getHeapUsage = exports.progressEpoch = exports.flushThreadCache = exports.arenas = exports.stats = exports.prof = exports.tuning = exports.version = exports.ctl = void 0;
 exports.ctl = require('./build/Release/malloc_tools_native').ctl;
 exports.version = exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readString('version');
 /*
@@ -92,24 +92,6 @@ exports.prof = {
         return (exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readU64('prof.interval')) || 0;
     },
 };
-exports.decay = {
-    get dirty() {
-        return (exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readSSize('opt.dirty_decay_ms')) || 0;
-    },
-    set dirty(val) {
-        if (exports.ctl) {
-            exports.ctl.writeSSize('opt.dirty_decay_ms', val);
-        }
-    },
-    get muzzy() {
-        return (exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readSSize('opt.muzzy_decay_ms')) || 0;
-    },
-    set muzzy(val) {
-        if (exports.ctl) {
-            exports.ctl.writeSSize('opt.muzzy_decay_ms', val);
-        }
-    }
-};
 exports.stats = {
     get allocated() {
         return (exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readSize('stats.allocated')) || 0;
@@ -156,18 +138,6 @@ exports.arenas = {
     get nhbins() {
         return exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readUnsigned('arenas.nhbins');
     },
-    get dirtyDecayMs() {
-        return (exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readSSize('arenas.dirty_decay_ms')) || 0;
-    },
-    set dirtyDecayMs(val) {
-        exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.writeSSize('arenas.dirty_decay_ms', val);
-    },
-    get muzzyDecayMs() {
-        return (exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.readSSize('arenas.muzzy_decay_ms')) || 0;
-    },
-    set muzzyDecayMs(val) {
-        exports.ctl === null || exports.ctl === void 0 ? void 0 : exports.ctl.writeSSize('arenas.muzzy_decay_ms', val);
-    },
     getArenaStats(arenaIndex) {
         if (!exports.ctl) {
             throw new Error('jemalloc is not loaded');
@@ -209,11 +179,18 @@ function flushThreadCache() {
     exports.ctl.command('thread.tcache.flush');
 }
 exports.flushThreadCache = flushThreadCache;
-function getHeapUsage() {
+function progressEpoch() {
     if (!exports.ctl) {
         throw new Error('jemalloc is not loaded');
     }
     exports.ctl.writeU64('epoch', (Date.now() / 1000) | 0);
+}
+exports.progressEpoch = progressEpoch;
+function getHeapUsage() {
+    if (!exports.ctl) {
+        throw new Error('jemalloc is not loaded');
+    }
+    progressEpoch();
     const allocated = exports.stats.allocated;
     const mapped = exports.stats.mapped;
     const retained = exports.stats.retained;

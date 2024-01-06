@@ -166,7 +166,7 @@ Object jeCreateNamespace(Env env) {
     ns.Set("writeSize", Function::New(env, jeWrite<size_t, int64_t>));
     ns.Set("writeSSize", Function::New(env, jeWrite<ssize_t, int64_t>));
     ns.Set("writeUnsigned", Function::New(env, jeWrite<unsigned, int64_t>));
-    ns.Set("ctlCommand", Function::New(env, jeWrite<void>));
+    ns.Set("command", Function::New(env, jeWrite<void>));
     return ns;
 }
 Object Init(Env env, Object exports)

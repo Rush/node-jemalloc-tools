@@ -33,10 +33,6 @@ export declare const prof: {
     readonly lgSample: number;
     readonly interval: number;
 };
-export declare const decay: {
-    dirty: number;
-    muzzy: number;
-};
 export declare const stats: {
     readonly allocated: number;
     readonly active: number;
@@ -57,8 +53,6 @@ export declare const arenas: {
     readonly tcacheMax: number | undefined;
     readonly nbins: number | undefined;
     readonly nhbins: number | undefined;
-    dirtyDecayMs: number;
-    muzzyDecayMs: number;
     getArenaStats(arenaIndex: number): {
         pactive: number;
         pdirty: number;
@@ -87,6 +81,7 @@ export declare const arenas: {
     };
 };
 export declare function flushThreadCache(): void;
+export declare function progressEpoch(): void;
 export declare function getHeapUsage(): {
     used: number;
     total: number;

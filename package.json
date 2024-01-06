@@ -1,6 +1,6 @@
 {
   "name": "jemalloc-tools",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node module for controlling jemalloc - extremely useful for native memory leak tracking",
   "main": "index.js",
   "types": "index.d.ts",
