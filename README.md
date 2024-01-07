@@ -1,6 +1,6 @@
 # jemalloc-tools
 
-`jemalloc-tools` is a TypeScript module providing a comprehensive interface to control and monitor memory allocation behavior in applications using `jemalloc`, a scalable concurrent malloc implementation. This module wraps the `mallctl` interface of `jemalloc`, offering a variety of functionalities including tuning, profiling, and retrieving detailed memory usage statistics.
+`jemalloc-tools` is a Node.JS module providing a comprehensive interface to control and monitor memory allocation behavior in applications using `jemalloc`, a scalable concurrent malloc implementation. This module wraps the `mallctl` interface of `jemalloc`, offering a variety of functionalities including tuning, profiling, and retrieving detailed memory usage statistics.
 
 See also this awesome [use case on heap profiling](https://github.com/jemalloc/jemalloc/wiki/Use-Case%3A-Heap-Profiling).
 
